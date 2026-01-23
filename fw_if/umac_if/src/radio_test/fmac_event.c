@@ -87,17 +87,24 @@ static enum nrf_wifi_status umac_event_rt_rf_test_process(struct nrf_wifi_fmac_d
 	case NRF_WIFI_RF_TEST_EVENT_RX_ADC_CAP:
 	case NRF_WIFI_RF_TEST_EVENT_RX_STAT_PKT_CAP:
 	case NRF_WIFI_RF_TEST_EVENT_RX_DYN_PKT_CAP:
-		status = hal_rpu_mem_read(fmac_dev_ctx->hal_dev_ctx,
-					  def_dev_ctx->rf_test_cap_data,
-					  RPU_MEM_RF_TEST_CAP_BASE,
-					  def_dev_ctx->rf_test_cap_sz);
-
 		nrf_wifi_osal_mem_cpy(&rf_test_capture_params,
 				      (const unsigned char *)&rf_test_event->rf_test_info.rfevent[0],
 				      sizeof(rf_test_capture_params));
 
 		def_dev_ctx->capture_status = rf_test_capture_params.capture_status;
+		unsigned int capture_base_addr = RPU_MEM_RF_TEST_CAP_BASE;
 
+		if (rf_test_capture_params.capture_addr != NULL) {
+			unsigned int addr_val = (unsigned int)(unsigned long)rf_test_capture_params.capture_addr;
+
+			if (addr_val != 0) {
+				capture_base_addr = addr_val;
+			}
+		}
+		status = hal_rpu_mem_read(fmac_dev_ctx->hal_dev_ctx,
+					  def_dev_ctx->rf_test_cap_data,
+					  capture_base_addr,
+					  def_dev_ctx->rf_test_cap_sz);
 		break;
 	case NRF_WIFI_RF_TEST_EVENT_TX_TONE_START:
 	case NRF_WIFI_RF_TEST_EVENT_DPD_ENABLE:
