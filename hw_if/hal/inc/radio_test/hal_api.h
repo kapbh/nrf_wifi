@@ -27,6 +27,8 @@
 #include "common/hal_fw_patch_loader.h"
 #include "common/hal_api_common.h"
 
+#define RPU_CMD_START_MAGIC 0xDEAD
+
 struct nrf_wifi_hal_dev_ctx *nrf_wifi_rt_hal_dev_add(struct nrf_wifi_hal_priv *hpriv,
 						     void *mac_dev_ctx);
 #endif /* __HAL_API_RT_H__ */

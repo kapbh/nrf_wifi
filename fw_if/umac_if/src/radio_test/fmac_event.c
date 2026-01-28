@@ -87,6 +87,7 @@ static enum nrf_wifi_status umac_event_rt_rf_test_process(struct nrf_wifi_fmac_d
 	}
 
 	switch (rf_test_event->rf_test_info.rfevent[0]) {
+#ifndef NRF71_ON_IPC
 	case NRF_WIFI_RF_TEST_EVENT_RX_ADC_CAP:
 	case NRF_WIFI_RF_TEST_EVENT_RX_STAT_PKT_CAP:
 	case NRF_WIFI_RF_TEST_EVENT_RX_DYN_PKT_CAP:
@@ -102,6 +103,7 @@ static enum nrf_wifi_status umac_event_rt_rf_test_process(struct nrf_wifi_fmac_d
 		def_dev_ctx->capture_status = rf_test_capture_params.capture_status;
 
 		break;
+#endif /* !NRF71_ON_IPC */
 	case NRF_WIFI_RF_TEST_EVENT_TX_TONE_START:
 	case NRF_WIFI_RF_TEST_EVENT_DPD_ENABLE:
 		break;

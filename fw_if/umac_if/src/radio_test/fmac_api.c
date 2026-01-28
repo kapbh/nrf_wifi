@@ -182,7 +182,7 @@ enum nrf_wifi_status nrf_wifi_rt_fmac_dev_init(struct nrf_wifi_fmac_dev_ctx *fma
 	nrf_wifi_osal_mem_set(&otp_info,
 			      0xFF,
 			      sizeof(otp_info));
-
+#ifndef NRF71_ON_IPC
 	status = nrf_wifi_hal_otp_info_get(fmac_dev_ctx->hal_dev_ctx,
 					   &otp_info.info,
 					   &otp_info.flags);
@@ -201,7 +201,7 @@ enum nrf_wifi_status nrf_wifi_rt_fmac_dev_init(struct nrf_wifi_fmac_dev_ctx *fma
 				     __func__);
 		goto out;
 	}
-
+#endif /* !NRF71_ON_IPC */
 	status = nrf_wifi_rt_fmac_fw_init(fmac_dev_ctx,
 				          &phy_rf_params,
 				          true,
@@ -1103,7 +1103,7 @@ enum nrf_wifi_status nrf_wifi_rt_fmac_rf_params_get(struct nrf_wifi_fmac_dev_ctx
 	nrf_wifi_osal_mem_set(&otp_info,
 			      0xFF,
 			      sizeof(otp_info));
-
+#ifndef NRF71_ON_IPC
 	status = nrf_wifi_hal_otp_info_get(fmac_dev_ctx->hal_dev_ctx,
 					   &otp_info.info,
 					   &otp_info.flags);
@@ -1113,7 +1113,7 @@ enum nrf_wifi_status nrf_wifi_rt_fmac_rf_params_get(struct nrf_wifi_fmac_dev_ctx
 				      __func__);
 		goto out;
 	}
-
+#endif /* !NRF71_ON_IPC */
 	status = nrf_wifi_hal_otp_ft_prog_ver_get(fmac_dev_ctx->hal_dev_ctx,
 						  &ft_prog_ver);
 	if (status != NRF_WIFI_STATUS_SUCCESS) {

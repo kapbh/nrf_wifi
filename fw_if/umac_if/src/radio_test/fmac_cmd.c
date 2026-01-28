@@ -101,11 +101,11 @@ enum nrf_wifi_status umac_cmd_rt_init(struct nrf_wifi_fmac_dev_ctx *fmac_dev_ctx
 	nrf_wifi_osal_mem_cpy(&umac_cmd_data->sys_params.rf_params[ANT_GAIN_2G_OFST],
 			      &tx_pwr_ctrl_params->ant_gain_2g,
 			      NUM_ANT_GAIN);
-
+#ifndef NRF71_ON_IPC
 	nrf_wifi_osal_mem_cpy(&umac_cmd_data->sys_params.rf_params[BAND_2G_LW_ED_BKF_DSSS_OFST],
 			      &tx_pwr_ctrl_params->band_edge_2g_lo_dss,
 			      NUM_EDGE_BACKOFF);
-
+#endif /* NRF71_ON_IPC */
 	nrf_wifi_osal_mem_cpy(umac_cmd_data->country_code,
 			      country_code,
 			      NRF_WIFI_COUNTRY_CODE_LEN);

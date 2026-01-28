@@ -11,12 +11,12 @@
 
 #include "queue.h"
 #include "common/hal_structs_common.h"
-#include "common/hal_common.h"
 #include "common/hal_reg.h"
 #include "common/hal_mem.h"
 #include "common/hal_interrupt.h"
 #ifndef NRF71_ON_IPC
 #include "common/pal.h"
+#include "common/hal_common.h"
 #endif
 #include "radio_test/hal_api.h"
 
@@ -135,7 +135,7 @@ struct nrf_wifi_hal_dev_ctx *nrf_wifi_rt_hal_dev_add(struct nrf_wifi_hal_priv *h
 				      __func__);
 		goto event_tasklet_free;
 	}
-
+#ifndef NRF71_ON_IPC
 	status = hal_rpu_irq_enable(hal_dev_ctx);
 
 	if (status != NRF_WIFI_STATUS_SUCCESS) {
@@ -143,7 +143,7 @@ struct nrf_wifi_hal_dev_ctx *nrf_wifi_rt_hal_dev_add(struct nrf_wifi_hal_priv *h
 				      __func__);
 		goto bal_dev_free;
 	}
-
+#endif /* !NRF71_ON_IPC */
 	return hal_dev_ctx;
 bal_dev_free:
 	nrf_wifi_bal_dev_rem(hal_dev_ctx->bal_dev_ctx);
