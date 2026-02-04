@@ -482,6 +482,10 @@ enum nrf_wifi_status nrf_wifi_rt_fmac_rf_test_rx_cap(struct nrf_wifi_fmac_dev_ct
 	rf_test_cap_params.lna_gain = lna_gain;
 	rf_test_cap_params.bb_gain = bb_gain;
 
+#ifdef NRF71_ON_IPC
+	rf_test_cap_params.capture_addr = (unsigned int *)cap_data;
+#endif /* NRF71_ON_IPC */
+
 	rt_dev_ctx->rf_test_type = rf_test_type;
 	rt_dev_ctx->rf_test_cap_data = cap_data;
 	rt_dev_ctx->rf_test_cap_sz = (num_samples * 3);
